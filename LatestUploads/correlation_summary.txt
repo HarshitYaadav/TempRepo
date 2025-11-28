@@ -1,0 +1,16 @@
+Correlation Analysis (N=774):
+Comparing WSI indices (Higher=Stress) vs SPEI (Lower=Drought/Stress)
+------------------------------------------------------------
+Index           | Pearson r    | P-value    | Spearman rho | P-value   
+------------------------------------------------------------
+WSI_equal       |      -0.0559 |     0.1202 |      -0.0531 |     0.1396
+WSI_entropy     |      -0.0356 |     0.3224 |      -0.0387 |     0.2825
+WSI_pca         |      -0.0267 |     0.4575 |      -0.0166 |     0.6446
+WSI_hybrid      |      -0.0491 |     0.1727 |      -0.0569 |     0.1136
+------------------------------------------------------------
+
+Interpretation:
+Since Higher WSI = Higher Stress and Lower SPEI = Higher Stress (Drought),
+we expect a NEGATIVE correlation.
+
+Strongest negative correlation with SPEI is: WSI_equal (r=-0.0559)
