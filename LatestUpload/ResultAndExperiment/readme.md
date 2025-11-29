@@ -194,33 +194,20 @@ The table below summarizes the best and worst performing states, highlighting re
 *   **Critical Failures**: Punjab and Rajasthan show poor or negative R² scores, indicating that the current model struggles with groundwater-dominated or highly arid regimes.
 *   **Urban Success**: Delhi (High Stress) is predicted with remarkable accuracy (Error: 3.03), validating the model for urban water management.
 
-### 5.4.3 Regional Performance Analysis
 
-#### Regional Metrics Summary
-
-![Regional Performance Comparison](file:///h:/2025%20winter/fds%20lab/results_plots/10_regional_performance_analysis.png)
-
-| **Region** | **Avg RMSE** | **Avg MAE** | **Avg R²** | **States** | **Characteristics** |
-|------------|--------------|-------------|------------|------------|---------------------|
-| **Central** | 8.93 | 7.23 | **0.812** | 3 | Best performance; stable monsoon patterns |
-| **East** | 11.48 | 9.23 | 0.684 | 9 | Good performance; high rainfall |
-| **South** | 11.72 | 9.40 | 0.646 | 7 | Moderate; coastal-inland diversity |
-| **North** | 13.46 | 10.42 | 0.320 | 7 | Challenging; urban stress, snow-fed rivers |
-| **West** | **17.78** | **13.71** | **0.150** | 3 | Most challenging; arid climate |
-
-### 5.4.4 Seasonal and Temporal Patterns
+### 5.4.2 Seasonal and Temporal Patterns
 
 ![Monthly WSI Trends](file:///h:/2025%20winter/fds%20lab/results_plots/14_monthly_wsi_trends_compact.png)
 
 **Temporal Insight**: The model demonstrates excellent tracking for stable urban environments like **Delhi** (MAE: 3.03) but struggles with the extreme variability of Himalayan states like **Himachal Pradesh**.
 
-### 5.4.5 State-Wise Water Stress Distribution
+### 5.4.3 State-Wise Water Stress Distribution
 
 ![State-Wise WSI Comparison](file:///h:/2025%20winter/fds%20lab/results_plots/12_state_wsi_comparison.png)
 
 This visualization ranks all states by their average Water Stress Index, revealing that **37% of states** face "High Stress" (>60 WSI), with no states qualifying as "Low Stress" (<40 WSI).
 
-### 5.4.6 Key State-Level Findings
+### 5.4.4 Key State-Level Findings
 
 *   **The "Accuracy Paradox"**: Paradoxically, the model predicts **High Stress (>60 WSI)** situations more accurately (Error: 6.82) than Moderate Stress situations (Error: 8.87), making it highly effective as an early warning system.
 *   **Bias Patterns**: There is a systematic tendency to **overpredict** stress in agricultural states (Punjab, Chhattisgarh) and **underpredict** in coastal regions (Goa, Kerala).
