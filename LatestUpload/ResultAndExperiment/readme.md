@@ -278,154 +278,255 @@ This scatter plot reveals the Pareto frontier of optimal configurations:
 
 ## 5.4 State-Level Forecasting Results
 
-### 5.4.1 Validation Performance Examples
+### 5.4.1 State-Wise Prediction Accuracy Rankings
 
-The validation phase involved state-wise predictions for the most recent 20% of the temporal dataset (2018-2020 data, with validation on the final 20% time period). Each model was evaluated on unseen data to assess generalization capability. Below are representative validation plots for the top-performing configurations across different model architectures.
+#### Top Performing States (R² Score - GRU + Equal-Weighted WSI)
 
----
+The following states demonstrated exceptional water stress prediction accuracy, achieving R² scores above 0.75:
 
-#### **GRU Model Validation Results**
+| **Rank** | **State** | **RMSE** | **MAE** | **R² Score** | **Performance Tier** |
+|----------|-----------|----------|---------|--------------|---------------------|
+| 1 | **Arunachal Pradesh** | 7.640 | 5.983 | **0.849** | Excellent |
+| 2 | **Chhattisgarh** | 8.637 | 7.161 | **0.845** | Excellent |
+| 3 | **Odisha** | 9.651 | 8.428 | **0.810** | Excellent |
+| 4 | **Uttar Pradesh** | 8.525 | 6.028 | **0.802** | Excellent |
+| 5 | **Madhya Pradesh** | 9.634 | 8.489 | **0.790** | Excellent |
+| 6 | **Tamil Nadu** | 10.030 | 6.889 | **0.771** | Excellent |
+| 7 | **Tripura** | 10.560 | 9.708 | **0.765** | Excellent |
+| 8 | **Andhra Pradesh** | 8.985 | 7.532 | **0.751** | Good |
+| 9 | **Puducherry** | 10.559 | 8.430 | **0.729** | Good |
+| 10 | **Uttarakhand** | 11.220 | 8.842 | **0.676** | Good |
 
-The GRU model demonstrated superior performance across both Equal-Weighted and Entropy-Weighted WSI formulations.
+**Key Insights**:
+- **Arunachal Pradesh** achieved the highest R² score (0.849), explaining 84.9% of water stress variance
+- **Central and Eastern states** dominate top performers - more predictable hydrological patterns
+- Top 10 states all achieved R² > 0.67
+- Lower RMSE values (7.6-11.2) indicate predictions within ±10 WSI units
 
-**GRU + Equal-Weighted WSI (Best Overall Configuration)**
+#### Challenge States (Bottom Performers)
 
-![GRU Equal-Weighted Validation](file:///h:/2025%20winter/fds%20lab/gru_validation_plot_equal.png)
+| **Rank** | **State** | **RMSE** | **MAE** | **R² Score** | **Challenges** |
+|----------|-----------|----------|---------|--------------|----------------|
+| 21 | Delhi | 12.819 | 9.122 | 0.347 | Urban complexity |
+| 28 | **Punjab** | 18.928 | 13.917 | **-0.244** | Groundwater depletion |
+| 29 | Rajasthan | 17.291 | 14.679 | 0.185 | Arid, high variability |
+| 30 | West Bengal | 15.160 | 12.263 | 0.603 | Flood-prone extremes |
 
-**Performance Metrics**:
-- **RMSE**: 11.782
-- **MAE**: 8.889
-- **R²**: 0.657
-- **MAPE**: 21.245%
+**Key Insights**:
+- **Punjab** showed negative R² (-0.244), indicating model predictions perform worse than simply using the mean value
+- **Western states** face prediction challenges due to extreme arid conditions and groundwater over-exploitation
+- Higher RMSE values (15-20) indicate predictions can deviate ±15-20 WSI units
 
-**Analysis**:
-This validation plot demonstrates the GRU model's exceptional ability to closely track actual WSI values across multiple Indian states. Key observations:
-- **Prediction Accuracy**: Predicted values (shown in the time series) closely follow actual ground truth trends
-- **Scatter Plot**: Points cluster tightly around the perfect prediction line (red dashed), indicating consistent accuracy
-- **Temporal Stability**: The model maintains prediction quality across different time periods without significant drift
-- **State Generalization**: Performs well across diverse states with varying hydrological conditions
+### 5.4.2 Visual Analysis of State Performance
 
-**Recommendation**: This configuration is optimal for **operational deployment** in water resource management systems.
+#### State Performance Rankings
 
----
+![State Performance Rankings](file:///h:/2025%20winter/fds%20lab/results_plots/9_state_performance_ranking.png)
 
-**GRU + Entropy-Weighted WSI**
-
-![GRU Entropy-Weighted Validation](file:///h:/2025%20winter/fds%20lab/gru_validation_plot_entropy.png)
-
-**Performance Metrics**:
-- **RMSE**: 15.230
-- **MAE**: 8.271
-- **R²**: 0.807
-- **MAPE**: 30.984%
-
-**Analysis**:
-The entropy-weighted formulation shows strong correlation with actual values, particularly effective in capturing water stress dynamics:
-- **High R² Score**: Explains 80.7% of variance in water stress patterns
-- **Stress Event Detection**: Particularly effective at capturing sudden changes in water stress levels
-- **Information-Theoretic Advantage**: Entropy weighting assigns greater importance to features with higher information content
-- **Balanced Performance**: Good trade-off between prediction accuracy and variance explanation
-
-**Recommendation**: This configuration is ideal for **research applications** and **variance analysis** studies.
-
----
-
-#### **RNN Model Validation Results**
-
-The RNN model, despite its simpler architecture, achieved competitive performance especially with data-driven weighting schemes.
-
-**RNN + Equal-Weighted WSI**
-
-![RNN Equal-Weighted Validation](file:///h:/2025%20winter/fds%20lab/rnn_validation_plot_equal.png)
-
-**Performance Metrics**:
-- **RMSE**: 12.049
-- **MAE**: 8.973
-- **R²**: 0.641
-- **MAPE**: 22.396%
+**Geographic Pattern**: Clear east-west gradient - eastern states show better performance than western arid states.
 
 **Analysis**:
-The RNN model with equal weighting provides a solid baseline performance:
-- **Interpretability**: Equal weighting makes model behavior transparent and explainable
-- **Stable Predictions**: Consistent performance without extreme errors
-- **Computational Efficiency**: Faster training and inference compared to LSTM/GRU
-- **Baseline Comparison**: Demonstrates that simple architectures can achieve reasonable accuracy
+- **Top 15 States (Green)**: R² scores range from 0.60 to 0.85, predominantly Eastern and Central regions
+- **Bottom 15 States (Red)**: R² scores range from -0.24 to 0.60, dominated by Western and Northern states
 
----
+### 5.4.3 Regional Performance Analysis
 
-**RNN + Entropy-Weighted WSI (Highest R² Score)**
+#### Regional Metrics Summary
 
-![RNN Entropy-Weighted Validation](file:///h:/2025%20winter/fds%20lab/rnn_validation_plot_entropy.png)
+![Regional Performance Comparison](file:///h:/2025%20winter/fds%20lab/results_plots/10_regional_performance_analysis.png)
 
-**Performance Metrics**:
-- **RMSE**: 14.951
-- **MAE**: 8.093
-- **R²**: 0.814
-- **MAPE**: 33.008%
+| **Region** | **Avg RMSE** | **Avg MAE** | **Avg R²** | **States** | **Characteristics** |
+|------------|--------------|-------------|------------|------------|---------------------|
+| **Central** | 8.93 | 7.23 | **0.812** | 3 | Best performance; stable monsoon patterns |
+| **East** | 11.48 | 9.23 | 0.684 | 9 | Good performance; high rainfall |
+| **South** | 11.72 | 9.40 | 0.646 | 7 | Moderate; coastal-inland diversity |
+| **North** | 13.46 | 10.42 | 0.320 | 7 | Challenging; urban stress, snow-fed rivers |
+| **West** | **17.78** | **13.71** | **0.150** | 3 | Most challenging; arid climate |
 
-**Analysis**:
-This configuration achieved the second-highest R² score among all combinations (only surpassed by RNN-PCA):
-- **Variance Explanation**: Captures 81.4% of water stress variance patterns
-- **Feature Synergy**: RNN architecture pairs well with entropy-based feature weighting
-- **Lowest MAE**: Among RNN configurations, shows superior absolute error minimization
-- **Research Value**: Excellent for understanding which water stress factors contribute most to variability
+**Key Findings**:
+1. **Central Region**: Best performance (Avg R² = 0.812) - includes Madhya Pradesh, Chhattisgarh, Uttar Pradesh
+2. **Western Region**: Most challenging (Avg R² = 0.150) - arid conditions, groundwater issues
+3. Regional differences exceed model architecture differences
 
----
+### 5.4.4 Model Comparison (GRU vs RNN)
 
-#### **LSTM Model Validation Results**
+#### State-Wise Model Improvement
 
-> **Note**: Full validation plots for LSTM models are available in the model validation results CSVs. The LSTM architecture achieved performance metrics competitive with GRU, particularly for:
-> - **LSTM + Equal-Weighted WSI**: RMSE=11.829, R²=0.654 (very close to GRU performance)
-> - **LSTM + Hybrid WSI**: RMSE=11.882, R²=0.672 (second-best for Hybrid formulation)
+![GRU vs RNN Comparison](file:///h:/2025%20winter/fds%20lab/results_plots/11_state_model_comparison.png)
 
-LSTM models demonstrated consistent mid-range performance across all indices, making them a reliable choice when balanced performance is required.
+**States Where GRU Significantly Improved**:
+- **Telangana**: +10.8 RMSE improvement
+- **West Bengal**: +9.9 RMSE improvement  
+- **Maharashtra**: +8.5 RMSE improvement
 
----
+**Pattern**: GRU's advantage most pronounced in states with complex, non-linear water stress patterns.
 
-### 5.4.2 Prediction Characteristics Analysis
+### 5.4.5 Water Stress Level Analysis
 
-Comprehensive analysis of state-level predictions across all validated models reveals:
+#### States with Lowest Water Stress
 
-#### **Temporal Consistency**
-- **Sequential Stability**: All models maintain prediction stability across consecutive months
-- **No Drift**: Validation errors remain consistent throughout the test period
-- **Seasonal Capture**: Models successfully capture seasonal water stress patterns (monsoon vs. dry seasons)
+![State-Wise WSI Comparison](file:///h:/2025%20winter/fds%20lab/results_plots/12_state_wsi_comparison.png)
 
-#### **State-Wise Variation**
-- **Regional Performance**: Prediction accuracy varies by state, correlating with:
-  - Data availability and quality
-  - Regional hydrological complexity
-  - Climatic diversity (arid vs. humid regions)
-- **Best Performance**: States with stable water patterns show higher R² scores
-- **Challenge Areas**: States with erratic rainfall and extreme events show higher RMSE
+| **Rank** | **State** | **Avg Actual WSI** | **Avg Predicted WSI** | **Prediction Error** | **Stress Category** |
+|----------|-----------|--------------------|-----------------------|----------------------|---------------------|
+| 1 | Kerala | 48.84 | 54.99 | 12.23 | Moderate Stress |
+| 2 | Madhya Pradesh | 49.99 | 50.45 | 5.57 | Moderate Stress |
+| 3 | Punjab | 50.27 | 56.86 | 6.60 | Moderate Stress |
+| 4 | Tamil Nadu | 51.80 | 54.57 | 10.65 | Moderate Stress |
+| 5 | Chhattisgarh | 52.45 | 61.49 | 11.79 | Moderate Stress |
 
-#### **Stress Event Detection**
-- **Entropy & PCA Models**: Show enhanced sensitivity to sudden stress level changes
-- **Equal & Hybrid Models**: Provide smoother, more stable predictions suitable for planning
-- **Early Warning**: All models capable of detecting stress increases 1 month in advance
+**Key Findings**:
+- **No Low-Stress States**: All Indian states experience at least moderate water stress (>40 WSI)
+- **Kerala**: Lowest average water stress (48.84 WSI) but model overpredicts by 6.14 points
+- **Madhya Pradesh**: Best prediction accuracy among low-stress states (error of only 5.57)
+- Model generally overpredicts water stress for these states (positive bias)
 
-#### **Model Behavior Patterns**
-1. **GRU Advantage**: Consistently lower RMSE across diverse states
-2. **RNN Specialization**: Excels with PCA and Entropy indices; struggles with raw feature spaces
-3. **LSTM Robustness**: Most balanced predictions; rarely the best or worst performer
-4. **Index Impact**: Choice of WSI formulation impacts accuracy more than model architecture
+#### States with Highest Water Stress
 
----
+| **Rank** | **State** | **Avg Actual WSI** | **Avg Predicted WSI** | **Prediction Error** | **Stress Category** |
+|----------|-----------|--------------------|-----------------------|----------------------|---------------------|
+| 1 | **Delhi** | 71.54 | 72.33 | 3.03 | High Stress |
+| 2 | Goa | 66.45 | 62.36 | 7.27 | High Stress |
+| 3 | Puducherry | 65.30 | 57.16 | 10.76 | High Stress |
+| 4 | Gujarat | 64.49 | 74.38 | 9.89 | High Stress |
+| 5 | Bihar | 63.19 | 60.71 | 5.92 | High Stress |
 
-### 5.4.3 Validation Data Split Details
+**Key Findings**:
+- **Delhi**: Highest average water stress (71.54 WSI) with **excellent** prediction accuracy (error of only 3.03)
+- **Accuracy Paradox**: Model predicts high-stress situations MORE accurately than moderate-stress situations
+- All top 5 highest stress states are categorized as "High Stress" (>60 WSI)
+- Urban centers show better prediction accuracy despite high stress levels
 
-**Temporal Splitting Strategy**:
-- **Training Period**: First 80% of chronologically ordered data (approximately 2018 - mid-2019)
-- **Validation Period**: Last 20% of data (approximately mid-2019 - 2020)
-- **No Data Leakage**: Strict temporal split ensures validation on unseen future data
-- **State-Independent**: Each state evaluated independently to assess generalization
+### 5.4.6 Prediction Accuracy by Stress Level
 
-**Validation Sample Statistics**:
-- **RNN Models**: ~400-500 validation samples (varies by index due to data availability)
-- **GRU Models**: ~450-550 validation samples
-- **LSTM Models**: ~400-500 validation samples
-- **Coverage**: All major Indian states included in validation set
+#### Performance by Stress Category
 
+![Prediction Accuracy by WSI](file:///h:/2025%20winter/fds%20lab/results_plots/13_prediction_accuracy_by_wsi.png)
+
+| **Stress Category** | **WSI Range** | **Number of States** | **Avg Prediction Error** |
+|---------------------|---------------|----------------------|--------------------------|
+| Low Stress | <40 | 0 | N/A |
+| Moderate Stress | 40-60 | 19 (63%) | 8.87 |
+| High Stress | >60 | 11 (37%) | **6.82** |
+
+**Insights**:
+- **No Low-Stress States**: All states experience at least moderate water stress - nationwide concern
+- **Better Accuracy for High Stress**: Model performs better when water stress is elevated (error: 6.82 vs 8.87)
+- **37% High-Stress States**: 11 states face persistent high water stress requiring immediate attention
+
+#### Best and Worst Predicted States
+
+**Best Predicted (Lowest Prediction Error)**:
+
+| **Rank** | **State** | **Avg Actual WSI** | **Prediction Error** | **Stress Category** |
+|----------|-----------|--------------------|-----------------------|---------------------|
+| 1 | Delhi | 71.54 | 3.03 | High Stress |
+| 2 | Rajasthan | 61.28 | 4.11 | High Stress |
+| 3 | Tripura | 55.03 | 4.45 | Moderate Stress |
+| 4 | Nagaland | 55.59 | 5.05 | Moderate Stress |
+| 5 | Uttar Pradesh | 60.16 | 5.32 | High Stress |
+
+**Worst Predicted (Highest Prediction Error)**:
+
+| **Rank** | **State** | **Avg Actual WSI** | **Prediction Error** | **Stress Category** |
+|----------|-----------|--------------------|-----------------------|---------------------|
+| 1 | Andhra Pradesh | 55.19 | 24.61 | Moderate Stress |
+| 2 | Arunachal Pradesh | 56.23 | 18.37 | Moderate Stress |
+| 3 | Himachal Pradesh | 54.68 | 13.69 | Moderate Stress |
+| 4 | Kerala | 48.84 | 12.23 | Moderate Stress |
+| 5 | Chhattisgarh | 52.45 | 11.79 | Moderate Stress |
+
+**Pattern Analysis**:
+- High-stress states (Delhi, Rajasthan, UP) are MORE accurately predicted
+- Moderate-stress states show higher prediction variability
+- Himalayan states (Himachal, Arunachal) show elevated prediction errors
+- Coastal states (Kerala, Andhra Pradesh, Goa) have higher prediction uncertainty
+
+### 5.4.7 Prediction Bias Analysis
+
+#### States Where Model Overpredicts (Positive Bias)
+
+| **State** | **Actual WSI** | **Predicted WSI** | **Bias** | **Implication** |
+|-----------|----------------|-------------------|----------|-----------------|
+| Himachal Pradesh | 54.68 | 66.89 | +12.21 | False alarms possible |
+| Gujarat | 64.49 | 74.38 | +9.89 | Overstated drought risk |
+| Chhattisgarh | 52.45 | 61.49 | +9.04 | Conservative estimates |
+| Punjab | 50.27 | 56.86 | +6.60 | Moderate overestimation |
+| Kerala | 48.84 | 54.99 | +6.14 | Slight overestimation |
+
+#### States Where Model Underpredicts (Negative Bias)
+
+| **State** | **Actual WSI** | **Predicted WSI** | **Bias** | **Implication** |
+|-----------|----------------|-------------------|----------|-----------------|
+| Puducherry | 65.30 | 57.16 | -8.14 | Missed drought warnings |
+| Meghalaya | 57.50 | 51.06 | -6.44 | Underestimated stress |
+| Maharashtra | 56.84 | 51.40 | -5.45 | Risk underestimation |
+| Goa | 66.45 | 62.36 | -4.09 | Moderate underestimation |
+| Uttar Pradesh | 60.16 | 57.00 | -3.16 | Slight underestimation |
+
+**Bias Insights**:
+- Model tends to **overpredict** in agricultural states (Punjab, Chhattisgarh)
+- Model **underpredicts** in coastal/high-rainfall states (Meghalaya, Goa)
+- Himalayan states show significant overprediction
+- Urban centers show minimal bias (Delhi: +0.79)
+
+### 5.4.8 Seasonal and Temporal Patterns
+
+#### Monthly WSI Trends for Representative States
+
+![Monthly WSI Trends](file:///h:/2025%20winter/fds%20lab/results_plots/14_monthly_wsi_trends.png)
+
+This visualization shows monthly water stress patterns for 4 representative states across different stress levels:
+- **Low Stress State**: Demonstrates stable, predictable patterns
+- **Moderate-Low State**: Shows seasonal variation with good prediction tracking
+- **Moderate-High State**: Exhibits higher variability with acceptable accuracy
+- **High Stress State**: Urban center with extreme stress but excellent prediction
+
+#### WSI Range by State (Seasonal Variability)
+
+**States with Widest WSI Variation (High Seasonal Variability)**:
+
+| **State** | **Min WSI** | **Max WSI** | **Range** | **Avg WSI** |
+|-----------|-------------|-------------|-----------|-------------|
+| Bihar | 25.00 | 100.00 | 75.00 | 63.19 |
+| Assam | 28.20 | 95.75 | 67.55 | 62.52 |
+| Arunachal Pradesh | 20.62 | 86.02 | 65.40 | 56.23 |
+| Puducherry | 32.61 | 95.39 | 62.78 | 65.30 |
+| Goa | 35.69 | 93.81 | 58.12 | 66.45 |
+
+**Insight**: These states experience extreme seasonal water stress variation due to monsoon-dependency, making predictions challenging.
+
+**States with Narrowest WSI Variation (Stable Water Stress)**:
+
+| **State** | **Min WSI** | **Max WSI** | **Range** | **Avg WSI** |
+|-----------|-------------|-------------|-----------|-------------|
+| Delhi | 48.59 | 84.47 | 35.88 | 71.54 |
+| Rajasthan | 36.53 | 78.82 | 42.29 | 61.28 |
+| Punjab | 26.76 | 70.70 | 43.94 | 50.27 |
+| Uttarakhand | 36.82 | 79.72 | 42.90 | 55.32 |
+| Haryana | 27.50 | 77.57 | 50.07 | 52.74 |
+
+**Insight**: Urban and arid states show more stable water stress patterns. Lower variability correlates with better prediction accuracy.
+
+### 5.4.9 Overall Statistics
+
+#### National-Level Summary
+
+| **Metric** | **Value** |
+|------------|-----------|
+| **National Average Actual WSI** | 57.74 |
+| **National Average Predicted WSI** | 57.67 |
+| **Overall Prediction Bias** | -0.07 (nearly unbiased!) |
+| **Overall Average Prediction Error** | 8.78 |
+| **Total States Analyzed** | 30 |
+| **Total Predictions Made** | 369 |
+| **Temporal Coverage** | 2023-2024 |
+
+#### Stress Category Distribution
+
+- **Low Stress (<40 WSI)**: 0 states (0%)
+- **Moderate Stress (40-60 WSI)**: 19 states (63%)
+- **High Stress (>60 WSI)**: 11 states (37%)
 ---
 
 ## 5.5 Discussion and Insights
