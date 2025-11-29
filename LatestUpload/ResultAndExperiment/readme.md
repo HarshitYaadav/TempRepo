@@ -237,6 +237,8 @@ This scatter plot reveals the Pareto frontier of optimal configurations:
 
 ### 5.3.3 Model-Specific Performance
 
+> **Note**: While LSTM models are often the default choice for time-series forecasting, our results indicate that the **GRU architecture**—with fewer parameters and simpler gating—achieves superior generalization on this hydrological dataset, suggesting that model complexity does not always equate to better performance.
+
 #### **RNN Performance**
 - **Strengths**: Achieves highest R² with PCA-Based WSI (0.849); lowest MAE with PCA (7.772)
 - **Weaknesses**: Higher RMSE values compared to LSTM/GRU for most indices
