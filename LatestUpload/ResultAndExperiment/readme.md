@@ -134,25 +134,6 @@ A total of **12 model-index combinations** were trained and evaluated (3 models 
 - **Best Overall Performance**: GRU with Equal-Weighted WSI (RMSE: 11.782, MAPE: 21.245%)
 - **Highest R² Score**: RNN with PCA-Based WSI (R²: 0.849)
 - **Lowest MAE**: RNN with PCA-Based WSI (MAE: 7.772)
-- **Most Problematic**: PCA-Based WSI consistently produced high MAPE values across all models
-
-### 5.3.2 Comparative Performance Analysis
-
-#### **Comprehensive Performance Metrics**
-
-![Overall Performance Matrix](file:///h:/2025%20winter/fds%20lab/results_plots/5_overall_performance_matrix.png)
-
-**Consolidated Analysis**:
-The 2×2 performance grid above summarizes the trade-offs between different model-index configurations:
-
-*   **Prediction Accuracy (RMSE & MAE)**: The **GRU model with Equal-Weighted WSI** achieves the best operational performance (lowest RMSE: 11.782, MAE: 8.889), closely followed by LSTM. This configuration offers the most reliable absolute predictions.
-*   **Variance Explanation (R²)**: **PCA-Based indices** consistently achieve the highest R² scores (>0.80) across all models, making them superior for research applications where explaining variability is prioritized over minimizing absolute error.
-*   **Percentage Error (MAPE)**: A significant anomaly exists with PCA-based indices, where MAPE values spike (>150%) due to scale distortions from standardization. For percentage-based evaluation, Equal-Weighted and Hybrid indices are far superior (~21-29%).
-
-**Key Takeaway**: There is a clear dichotomy between **accuracy-focused configurations** (Equal/Hybrid WSI) for deployment and **variance-focused configurations** (PCA/Entropy WSI) for research.
-
-### 5.3.3 Model-Specific Performance
-
 > **Note**: While LSTM models are often the default choice for time-series forecasting, our results indicate that the **GRU architecture**—with fewer parameters and simpler gating—achieves superior generalization on this hydrological dataset, suggesting that model complexity does not always equate to better performance.
 
 #### **RNN Performance**
@@ -227,6 +208,27 @@ The table below summarizes the best and worst performing states, highlighting re
 | **North** | 13.46 | 10.42 | 0.320 | 7 | Challenging; urban stress, snow-fed rivers |
 | **West** | **17.78** | **13.71** | **0.150** | 3 | Most challenging; arid climate |
 
+### 5.4.4 Seasonal and Temporal Patterns
+
+![Monthly WSI Trends](file:///h:/2025%20winter/fds%20lab/results_plots/14_monthly_wsi_trends_compact.png)
+
+**Temporal Insight**: The model demonstrates excellent tracking for stable urban environments like **Delhi** (MAE: 3.03) but struggles with the extreme variability of Himalayan states like **Himachal Pradesh**.
+
+### 5.4.5 State-Wise Water Stress Distribution
+
+![State-Wise WSI Comparison](file:///h:/2025%20winter/fds%20lab/results_plots/12_state_wsi_comparison.png)
+
+This visualization ranks all states by their average Water Stress Index, revealing that **37% of states** face "High Stress" (>60 WSI), with no states qualifying as "Low Stress" (<40 WSI).
+
+### 5.4.6 Key State-Level Findings
+
+*   **The "Accuracy Paradox"**: Paradoxically, the model predicts **High Stress (>60 WSI)** situations more accurately (Error: 6.82) than Moderate Stress situations (Error: 8.87), making it highly effective as an early warning system.
+*   **Bias Patterns**: There is a systematic tendency to **overpredict** stress in agricultural states (Punjab, Chhattisgarh) and **underpredict** in coastal regions (Goa, Kerala).
+*   **Nationwide Stress**: Analysis confirms that **0% of states** fall into the "Low Stress" category (<40 WSI), with 37% facing persistent high stress.
+
+## 5.5 Discussion and Insights
+
+### 5.5.1 Model Selection Recommendations
 
 | **Use Case**                          | **Recommended Configuration**      | **Justification**                                      |
 |---------------------------------------|-------------------------------------|--------------------------------------------------------|
