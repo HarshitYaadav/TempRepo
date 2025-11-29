@@ -573,11 +573,23 @@ Based on comprehensive evaluation, we recommend the following model-index combin
 
 ## 5.6 Conclusion
 
+## 5.6 Conclusion
+
 This comprehensive experimental evaluation demonstrates the efficacy of **AquaAlert's multi-index, multi-model framework** for predicting monthly water stress across Indian states. The optimal configuration—**GRU with Equal-Weighted WSI**—achieved an RMSE of 11.782 and MAPE of 21.245%, representing a robust and interpretable solution for operational water stress forecasting.
 
-The systematic comparison of 12 model-index combinations provides valuable insights into the trade-offs between different recurrent architectures and WSI formulations. While PCA-based indices excel in variance explanation (R² up to 0.849), equal-weighted and hybrid indices offer superior practical prediction accuracy with lower percentage errors.
+### Key Contributions and Findings:
 
-These results establish a strong foundation for deploying machine learning-based early warning systems for drought mitigation and proactive water resource management in data-constrained regions.
+1.  **Model Superiority**: The GRU architecture consistently outperformed LSTM and RNN in prediction accuracy (RMSE/MAE), proving that simpler gating mechanisms can be more effective for this specific hydrological dataset.
+
+2.  **The "Accuracy Paradox"**: A critical finding is that the model predicts **high-stress situations (>60 WSI) more accurately** (Error: 6.82) than moderate-stress situations (Error: 8.87). This is highly advantageous for an early warning system, as accuracy is highest exactly when it matters most—during severe water stress events.
+
+3.  **Regional Disparities**: Performance varies significantly by geography, with the **Central Region** showing excellent predictability (R² = 0.812) while the arid **Western Region** remains challenging (R² = 0.150). This suggests that a "one-size-fits-all" model may need to be supplemented with region-specific fine-tuning for arid zones.
+
+4.  **Nationwide Stress Assessment**: Our analysis reveals that **0% of Indian states** fall into the "Low Stress" category (<40 WSI), with 37% facing "High Stress" (>60 WSI). This underscores the urgent necessity for the predictive capabilities developed in this study.
+
+5.  **Index Trade-offs**: While PCA-based indices excel in variance explanation (R² up to 0.849) suitable for research, Equal-Weighted and Hybrid indices offer the superior practical prediction accuracy required for operational deployment.
+
+These results establish a strong foundation for deploying machine learning-based early warning systems for drought mitigation. The system is particularly ready for deployment in high-stress urban centers like Delhi and agricultural hubs in Central India, where prediction confidence is highest.
 
 ---
 
